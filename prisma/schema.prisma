@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -24,7 +24,7 @@ model Job {
   status        String   @default("PENDING")
   createdBy     String   @default("boss")
   assignedTo    String   @default("worker")
-  customerPhone String?   // ← ВРЕМЕННО ?
+  customerPhone String?
   scheduledDate DateTime?
   timeFrom      String?
   timeTo        String?
