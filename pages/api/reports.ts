@@ -27,12 +27,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === 'POST') {
-    try {
-      const { fields, files } = await parseForm(req)
-      const data = JSON.parse(fields.data as string)
+if (req.method === 'POST') {
+  try {
+    const { fields, files } = await parseForm(req)
 
-      console.log('📝 Received data:', data)
+    // Приводим fields.data к строке
+    const raw = Array.isArray(fields.data)
+      ? fields.data[0]
+      : fields.data
+
+    const data = JSON.parse(raw as string)
+
+    console.log('📝 Received data:', data)
 
       const photoUrls: string[] = []
       const photoFiles = Array.isArray(files.photos)
