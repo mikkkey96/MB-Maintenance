@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Job {
+  id            String   @id @default(cuid())
+  address       String
+  postcode      String
+  problem       String
+  status        String   @default("PENDING")
+  createdBy     String   @default("boss")
+  assignedTo    String   @default("worker")
+  customerPhone String?   // ← ВРЕМЕННО ?
+  scheduledDate DateTime?
+  timeFrom      String?
+  timeTo        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  report        Report?
+}
+
+model Report {
+  id               String   @id @default(cuid())
+  jobId            String   @unique
+  job              Job      @relation(fields: [jobId], references: [id])
+  workSummary      String
+  photos           String
+  startTime        String?
+  finishTime       String?
+  requiresFollowUp Boolean  @default(false)
+  postponed        Boolean  @default(false)
+  postponedDate    String?
+  postponedReason  String?
+  createdAt        DateTime @default(now())
+}

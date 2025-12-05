@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Job" ADD COLUMN "customerPhone" TEXT;
+ALTER TABLE "Job" ADD COLUMN "scheduledDate" DATETIME;
+ALTER TABLE "Job" ADD COLUMN "timeFrom" TEXT;
+ALTER TABLE "Job" ADD COLUMN "timeTo" TEXT;
